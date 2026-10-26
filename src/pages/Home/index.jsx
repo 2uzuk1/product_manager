@@ -1,23 +1,29 @@
 import { useState } from "react";
 
-import Modal from "../Modal";
+import Button from "../../components/Button";
+import ProductModal from "../ModalProduct";
+import CategoryModal from "../ModalCategory";
 
 function Home() {
-  const [modalOpen, setModalOpen] = useState(false);
+  const [productModalOpen, setProductModalOpen] = useState(false);
+  const [categoryModalOpen, setCategoryModalOpen] = useState(false);
 
   return (
-    <div>
+    <div className="flex flex-col gap-2 m-5">
       <h1 className="text-4xl font-semibold">Product Manager</h1>
-      <div>
-        <button
-          onClick={() => setModalOpen(true)}
-          className="cursor-pointer py-2 px-6 bg-primary rounded-lg text-background transition hover:scale-105 hover:bg-primary/90 "
-        >
-          New product
-        </button>
+      <div className="flex gap-2">
+        <Button onClick={() => setProductModalOpen(true)}>New product</Button>
+        <Button onClick={() => setCategoryModalOpen(true)}>New category</Button>
       </div>
 
-      <Modal canShow={modalOpen} onClose={() => setModalOpen(false)} />
+      <ProductModal
+        canShow={productModalOpen}
+        onClose={() => setProductModalOpen(false)}
+      />
+      <CategoryModal
+        canShow={categoryModalOpen}
+        onClose={() => setCategoryModalOpen(false)}
+      />
     </div>
   );
 }
