@@ -13,6 +13,17 @@
   --color-ok: #16a34a;
   --color-low: #d97706;
   --color-out: #dc2626;
+
+  --animate-wiggle: wiggle 1s ease-in-out infinite;
+  @keyframes wiggle {
+    0%,
+    100% {
+      transform: rotate(-3deg);
+    }
+    50% {
+      transform: rotate(3deg);
+    }
+  }
 }
 
 @layer base {
@@ -26,5 +37,15 @@
 
   input {
     @apply rounded-lg border border-border bg-surface px-3 py-2 text-base font-normal text-text outline-none focus:border-primary focus:ring-2 focus:ring-primary/20;
+  }
+}
+
+@layer components {
+  .modal-overlay {
+    @apply fixed inset-0 z-50 flex items-center justify-center bg-black/30 p-4 backdrop-blur-sm;
+  }
+
+  .modal-card {
+    @apply flex flex-col w-full max-w-md rounded-xl bg-surface shadow-xl gap-7 p-5;
   }
 }
