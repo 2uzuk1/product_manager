@@ -1,3 +1,5 @@
+import Button from "./Button";
+
 const ModalCategory = ({ canShow, onClose }) => {
   if (canShow) {
     return (

@@ -1,4 +1,4 @@
-import Button from "../../components/Button";
+import Button from "./Button";
 
 const ProductModal = ({ canShow, onClose }) => {
   const handleSubmit = (event) => {

@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-import Button from "../../components/Button";
-import ProductModal from "../ModalProduct";
-import CategoryModal from "../ModalCategory";
+import Button from "../components/Button";
+import ProductModal from "../components/ProductModal";
+import CategoryModal from "../components/CategoryModal";
 
 function Home() {
   const [productModalOpen, setProductModalOpen] = useState(false);
