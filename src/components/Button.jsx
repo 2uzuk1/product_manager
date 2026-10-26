@@ -1,5 +1,6 @@
 function Button({ variant = "default", className = "", ...props }) {
-  const base = "cursor-pointer rounded-lg text-sm font-medium transition";
+  const base =
+    "cursor-pointer rounded-lg text-sm font-medium transition disabled:bg-smooth-text disabled:cursor-default disabled:opacity-50 disabled:scale-100";
 
   const variants = {
     default:
