@@ -6,15 +6,19 @@ const ModalCategory = ({ canShow, onClose, onSave }) => {
     event.preventDefault();
   };
   return (
-    <ModalBase canShow={canShow} onClose={onClose} title="New Product">
+    <ModalBase canShow={canShow} onClose={onClose} title="New Category">
       <form onClick={handleSubmit} className="flex flex-col gap-7">
         <label>
           Category name:
           <input type="text" />
         </label>
         <div className="flex justify-end gap-2">
-          <Button variant="save">Save</Button>
-          <Button variant="cancel">Cancel</Button>
+          <Button variant="save" onSubmit={handleSubmit}>
+            Save
+          </Button>
+          <Button variant="cancel" onClick={onClose}>
+            Cancel
+          </Button>
         </div>
       </form>
     </ModalBase>

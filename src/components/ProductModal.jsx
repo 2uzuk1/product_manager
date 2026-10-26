@@ -17,6 +17,16 @@ const ProductModal = ({ canShow, onClose, onSave }) => {
           Quantity:
           <input type="number" name="quantity" min="0" />
         </label>
+        <label>
+          Product image/s:
+          {/* TODO: Image files selector */}
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={({ target }) => console.log(Array.from(target.files))}
+          />
+        </label>
         <div className="flex justify-end gap-2">
           <Button variant="save" type="submit">
             Save
