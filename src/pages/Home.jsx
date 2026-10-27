@@ -22,12 +22,11 @@ function Home() {
         </Button>
         <Button onClick={() => setCategoryModalOpen(true)}>New category</Button>
       </div>
-
-      <ul className="grid grid-cols-[0.5fr_4fr_1fr_1fr] py-2 max-w-4xl w-full border border-border rounded-xl">
-        <li>ID</li>
-        <li>Product Name</li>
-        <li className="text-right">Quantity</li>
-        <li>Action</li>
+      <ul className="grid grid-cols-2 gap-2 p-2 max-w-2xl w-full bg-surface border border-border rounded-xl transition ease-in-out hover:scale-101 hover:shadow-md">
+        <h2 className="flex col-span-2 justify-center font-semibold p-2">
+          Categories
+        </h2>
+            className="flex justify-center p-2 text-smooth-text font-semibold bg-surface border border-border rounded-md cursor-pointer transition ease-in-out hover:border-b-0 hover:scale-101 hover:shadow-md hover:text-text"
       </ul>
 
       <ProductModal
