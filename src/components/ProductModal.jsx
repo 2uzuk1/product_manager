@@ -18,6 +18,10 @@ const ProductModal = ({ canShow, onClose, onSave }) => {
           <input type="number" name="quantity" min="0" />
         </label>
         <label>
+          Price:
+          <input type="number" name="price" min="0" />
+        </label>
+        <label>
           Product image/s:
           {/* TODO: Image files selector */}
           <input
