@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Button from "../components/Button";
 import ProductModal from "../components/ProductModal";
@@ -8,7 +8,16 @@ function Home() {
   const [productModalOpen, setProductModalOpen] = useState(false);
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
   const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([1]);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8000/categories")
+      .then((response) => response.json())
+      .then((data) => {
+        setCategories(data);
+      })
+      .catch((error) => console.error(error));
+  }, []);
 
   return (
     <div className="flex flex-col gap-5 m-7 items-center">
@@ -26,7 +35,15 @@ function Home() {
         <h2 className="flex col-span-2 justify-center font-semibold p-2">
           Categories
         </h2>
+        {categories.map((c) => (
+          <li
             className="flex justify-center p-2 text-smooth-text font-semibold bg-surface border border-border rounded-md cursor-pointer transition ease-in-out hover:border-b-0 hover:scale-101 hover:shadow-md hover:text-text"
+            key={c.id}
+            onClick={() => setProductModalOpen(true)}
+          >
+            {c.name}
+          </li>
+        ))}
       </ul>
 
       <ProductModal
