@@ -45,7 +45,21 @@ def create_category(data: CategoryCreate):
     return category
 
 
-@app.delete("/categories/{id}", status_code=204)
+@app.delete("/categories/{category_id}", status_code=204)
+def delete_category(category_id: str):
+    if not any(c.id == category_id for c in categories):
+        raise HTTPException(status_code=404, detail="ERROR! Category not found")
+    if any(p.category_id == category_id for p in products):
+        raise HTTPException(
+            status_code=409,
+            detail="ERROR! This category still has products",
+            # On category deletion with products asigned to it cause data loss.
+        )
+    for c in categories:
+        if c.id == category_id:
+            categories.remove(c)
+            return
+
 
 # --- Products ---
 class ProductCreate(BaseModel):
@@ -54,6 +68,7 @@ class ProductCreate(BaseModel):
     description: str | None = None
     quantity: int = Field(ge=0)
     price: int | None = Field(ge=0, default=None)
+    # Currency TBD
 
 
 class Product(ProductCreate):
@@ -74,7 +89,11 @@ def create_product(data: ProductCreate):
     if not name:
         raise HTTPException(status_code=422, detail="ERROR! Name cannot be empty")
     if not any(c.id == data.category_id for c in categories):
-        raise HTTPException(status_code=422, detail="ERROR! Category not found")
+        raise HTTPException(
+            status_code=422,
+            detail="ERROR! Category not found",
+            # 422: the request is readable, but category_id points to nothing
+        )
     if any(
         p.name.lower() == name.lower() and p.category_id == data.category_id
         for p in products
@@ -92,3 +111,13 @@ def create_product(data: ProductCreate):
 
     products.append(product)
     return product
+
+
+@app.delete("/products/{product_id}", status_code=204)
+def delete_product(product_id: str):
+    for p in products:
+        if p.id == product_id:
+            products.remove(p)
+            return
+
+    raise HTTPException(status_code=404, detail="ERROR! Product not found")
