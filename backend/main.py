@@ -61,6 +61,23 @@ def delete_category(category_id: str):
             return
 
 
+@app.put("/categories/{category_id}", response_model=Category)
+def edit_category(data: CategoryCreate, category_id: str):
+    name = data.name.strip()
+    if not any(c.id == category_id for c in categories):
+        raise HTTPException(status_code=404, detail="ERROR! Category not found")
+    if not name:
+        raise HTTPException(status_code=422, detail="ERROR! Name cannot be empty")
+    # Only one unique category name.
+    if any(c.name.lower() == name.lower() and c.id != category_id for c in categories):
+        raise HTTPException(status_code=409, detail="ERROR! Category already exists")
+
+    for i, c in enumerate(categories):
+        if c.id == category_id:
+            categories[i] = Category(id=category_id, name=name)
+            return categories[i]
+
+
 # --- Products ---
 class ProductCreate(BaseModel):
     category_id: str
@@ -121,3 +138,33 @@ def delete_product(product_id: str):
             return
 
     raise HTTPException(status_code=404, detail="ERROR! Product not found")
+
+
+@app.put("/products/{product_id}", response_model=Product)
+def edit_product(data: ProductCreate, product_id: str):
+    name = data.name.strip()
+    if not any(p.id == product_id for p in products):
+        raise HTTPException(status_code=404, detail="ERROR! Product not found")
+    if not name:
+        raise HTTPException(status_code=422, detail="ERROR! Name cannot be empty")
+    if not any(c.id == data.category_id for c in categories):
+        raise HTTPException(status_code=422, detail="ERROR! Category not found")
+    if any(
+        p.name.lower() == name.lower()
+        and p.category_id == data.category_id
+        and p.id != product_id
+        for p in products
+    ):
+        raise HTTPException(status_code=409, detail="ERROR! Product already exists")
+        # Only one unique product per category
+    for i, p in enumerate(products):
+        if p.id == product_id:
+            products[i] = Product(
+                id=product_id,
+                category_id=data.category_id,
+                name=name,
+                description=data.description,
+                quantity=data.quantity,
+                price=data.price,
+            )
+            return products[i]
