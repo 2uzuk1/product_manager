@@ -96,8 +96,10 @@ products = []
 
 
 @app.get("/products", response_model=list[Product])
-def list_products():
-    return products
+def list_products(category_id: str | None = None):
+    if category_id is None:
+        return products
+    return [p for p in products if p.category_id == category_id]
 
 
 @app.post("/products", status_code=201, response_model=Product)
