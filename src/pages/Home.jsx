@@ -5,6 +5,8 @@ import ProductModal from "../components/ProductModal";
 import CategoryModal from "../components/CategoryModal";
 import ProductListModal from "../components/ProductListModal";
 
+import CategoryForm from "../components/CategoryForm";
+
 function Home() {
   const [modalOpen, setModalOpen] = useState(null);
   const [products, setProducts] = useState([]);
@@ -114,6 +116,7 @@ function Home() {
         onClose={() => setSelectedCategoryId(null)}
         products={products}
       />
+      <CategoryForm />
     </div>
   );
 }
