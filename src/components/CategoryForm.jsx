@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Button from "./Button";
 
-const CategoryForm = () => {
+const CategoryForm = ({ onCreated }) => {
   const [textValue, setTextValue] = useState("");
   const [textError, setTextError] = useState("");
   const [textLoading, setTextLoading] = useState(false);
@@ -22,6 +22,7 @@ const CategoryForm = () => {
       if (!response.ok) throw new Error(`${data.detail}`);
       console.log(data);
       setTextValue("");
+      onCreated();
     } catch (err) {
       console.log(err.message);
       setTextError(err.message);
