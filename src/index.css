@@ -36,6 +36,6 @@
   }
 
   .modal-card {
-    @apply flex flex-col w-full rounded-xl bg-surface shadow-xl gap-7 p-5 max-w-md max-h-[90vh] overflow-y-auto;
+    @apply flex flex-col rounded-xl bg-surface shadow-xl gap-7 p-5 max-w-2xl w-full  max-h-[90vh] overflow-y-auto;
   }
 }

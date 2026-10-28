@@ -7,10 +7,14 @@ const ProductModal = ({ canShow, onClose, onSave }) => {
   };
 
   return (
-    <ModalBase canShow={canShow} onClose={onClose} title="New category">
+    <ModalBase canShow={canShow} onClose={onClose} title="New Product">
       <form onSubmit={handleSubmit} className="flex flex-col gap-7">
         <label>
           Product:
+          <input type="text" />
+        </label>
+        <label>
+          Description:
           <input type="text" />
         </label>
         <label>
