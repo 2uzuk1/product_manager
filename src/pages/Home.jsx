@@ -15,22 +15,7 @@ function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    setError("");
-    fetch("http://localhost:8000/categories")
-      .then((response) => {
-        if (!response.ok) throw new Error(`Request failed: ${response.status}`);
-        return response.json();
-      })
-      .then((data) => {
-        setCategories(data);
-      })
-      .catch((error) => {
-        console.log(error);
-        setError("Not possible to load categories.");
-      })
-      .finally(() => setLoading(false));
-  }, []);
+  useEffect(() => loadCategories, []);
 
   useEffect(() => {
     setError("");
@@ -51,6 +36,23 @@ function Home() {
   const handleCategoryClick = (category_id) => {
     setSelectedCategoryId(category_id);
     console.log(category_id);
+  };
+
+  const loadCategories = () => {
+    setError("");
+    fetch("http://localhost:8000/categories")
+      .then((response) => {
+        if (!response.ok) throw new Error(`Request failed: ${response.status}`);
+        return response.json();
+      })
+      .then((data) => {
+        setCategories(data);
+      })
+      .catch((error) => {
+        console.log(error);
+        setError("Not possible to load categories.");
+      })
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -116,7 +118,7 @@ function Home() {
         onClose={() => setSelectedCategoryId(null)}
         products={products}
       />
-      <CategoryForm />
+      <CategoryForm onCreated={loadCategories} />
     </div>
   );
 }
