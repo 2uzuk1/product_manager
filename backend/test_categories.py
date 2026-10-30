@@ -39,3 +39,25 @@ def test_create_empty_name_422():
 def test_create_blank_name_422():
     response = client.post("/categories", json={"name": "    "})
     assert response.status_code == 422
+
+
+def test_product_create_201():
+    category = client.post("/categories", json={"name": "Fruits"})
+    category_id = category.json()["id"]
+    response = client.post(
+        "/products",
+        json={"category_id": category_id, "name": "Laranja", "quantity": 50},
+    )
+    assert response.status_code == 201
+
+
+def test_delete_category_with_products_409():
+    category = client.post("/categories", json={"name": "Frutas"})
+    category_id = category.json()["id"]
+    product = client.post(
+        "/products",
+        json={"category_id": category_id, "name": "Laranja", "quantity": 50},
+    )
+    assert product.status_code == 201
+    response = client.delete(f"/categories/{category_id}")
+    assert response.status_code == 409
